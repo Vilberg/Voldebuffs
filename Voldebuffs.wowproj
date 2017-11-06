@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Deploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Name>Voldebuffs</Name>
+    <ProjectGuid>d04e8198-2db2-4f6e-b664-5e8b68b7bcd5</ProjectGuid>
+    <AssemblyName>Voldebuffs</AssemblyName>
+    <RootNamespace>Voldebuffs</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Voldebuffs.lua">
+      <SubType>Code</SubType>
+      <DependentUpon>Voldebuffs.xml</DependentUpon>
+    </Content>
+    <Content Include="Voldebuffs.xml">
+      <SubType>Frame</SubType>
+    </Content>
+    <Content Include="Voldebuffs.toc">
+      <SubType>TableOfContents</SubType>
+    </Content>
+    <Content Include="embeds.xml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(DevEnvDir)\Extensions\Tools\MSBuild\AddonStudio\Wow\3.0\WowAddonStudio.targets" />
+  <!--
+  To modify your build process, add your task inside one of the targets below and uncomment it.
+  <Target Name="BeforeClean"></Target>
+  <Target Name="AfterClean"></Target>
+  <Target Name="BeforeRebuild"></Target>
+  <Target Name="AfterRebuild"></Target>
+  <Target Name="BeforeDeploy"></Target>
+  <Target Name="AfterDeploy"></Target>
+  -->
+</Project>

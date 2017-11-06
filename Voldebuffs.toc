@@ -1,0 +1,12 @@
+## Title: Volde|cffffffffbuffs|r
+## Notes: lol idk
+##
+## Interface: 30300
+##
+## Version: 0.4.0
+## Author: Voldebag
+##
+## SavedVariables: vb_optionsDB
+
+embeds.xml
+Voldebuffs.xml
