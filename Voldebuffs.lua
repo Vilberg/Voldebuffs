@@ -788,32 +788,32 @@ function vb_rangedHasPoison()
 end
 
 function vb_appendTooltip(vb_tempTooltipInput)
--- Worker to simplify
-vb_tempTooltipText = vb_tempTooltipText .. " " .. vb_tempTooltipInput
+   -- Worker to simplify
+   vb_tempTooltipText = vb_tempTooltipText .. " " .. vb_tempTooltipInput
 end
 
 function vb_getRangedWeaponTooltip()
--- Part of the poison checking, finds ranged wep tooltip and parses it
--- call this every time you want to scan
-vb_tempTooltipText = ""
-vb_f:SetOwner(UIParent, 'ANCHOR_NONE')
-vb_f:SetInventoryItem('player',18,false)
-
-if (vb_f:NumLines() >= 1) then vb_appendTooltip(MyTooltipTextLeft1:GetText()) end
-if (vb_f:NumLines() >= 2) then vb_appendTooltip(MyTooltipTextLeft2:GetText()) end
-if (vb_f:NumLines() >= 3) then vb_appendTooltip(MyTooltipTextLeft3:GetText()) end
-if (vb_f:NumLines() >= 4) then vb_appendTooltip(MyTooltipTextLeft4:GetText()) end
-if (vb_f:NumLines() >= 5) then vb_appendTooltip(MyTooltipTextLeft5:GetText()) end
-if (vb_f:NumLines() >= 6) then vb_appendTooltip(MyTooltipTextLeft6:GetText()) end
-if (vb_f:NumLines() >= 7) then vb_appendTooltip(MyTooltipTextLeft7:GetText()) end
-if (vb_f:NumLines() >= 8) then vb_appendTooltip(MyTooltipTextLeft8:GetText()) end
-if (vb_f:NumLines() >= 9) then vb_appendTooltip(MyTooltipTextLeft9:GetText()) end
-if (vb_f:NumLines() >= 10) then vb_appendTooltip(MyTooltipTextLeft10:GetText()) end
-if (vb_f:NumLines() >= 11) then vb_appendTooltip(MyTooltipTextLeft11:GetText()) end
-if (vb_f:NumLines() >= 12) then vb_appendTooltip(MyTooltipTextLeft12:GetText()) end
-if (vb_f:NumLines() >= 13) then vb_appendTooltip(MyTooltipTextLeft13:GetText()) end
-if (vb_f:NumLines() >= 14) then vb_appendTooltip(MyTooltipTextLeft14:GetText()) end
-if (vb_f:NumLines() >= 15) then vb_appendTooltip(MyTooltipTextLeft15:GetText()) end
+   -- Part of the poison checking, finds ranged wep tooltip and parses it
+   -- call this every time you want to scan
+   vb_tempTooltipText = ""
+   vb_f:SetOwner(UIParent, 'ANCHOR_NONE')
+   vb_f:SetInventoryItem('player',18,false)
+   
+   if (vb_f:NumLines() >= 1) then vb_appendTooltip(MyTooltipTextLeft1:GetText()) end
+   if (vb_f:NumLines() >= 2) then vb_appendTooltip(MyTooltipTextLeft2:GetText()) end
+   if (vb_f:NumLines() >= 3) then vb_appendTooltip(MyTooltipTextLeft3:GetText()) end
+   if (vb_f:NumLines() >= 4) then vb_appendTooltip(MyTooltipTextLeft4:GetText()) end
+   if (vb_f:NumLines() >= 5) then vb_appendTooltip(MyTooltipTextLeft5:GetText()) end
+   if (vb_f:NumLines() >= 6) then vb_appendTooltip(MyTooltipTextLeft6:GetText()) end
+   if (vb_f:NumLines() >= 7) then vb_appendTooltip(MyTooltipTextLeft7:GetText()) end
+   if (vb_f:NumLines() >= 8) then vb_appendTooltip(MyTooltipTextLeft8:GetText()) end
+   if (vb_f:NumLines() >= 9) then vb_appendTooltip(MyTooltipTextLeft9:GetText()) end
+   if (vb_f:NumLines() >= 10) then vb_appendTooltip(MyTooltipTextLeft10:GetText()) end
+   if (vb_f:NumLines() >= 11) then vb_appendTooltip(MyTooltipTextLeft11:GetText()) end
+   if (vb_f:NumLines() >= 12) then vb_appendTooltip(MyTooltipTextLeft12:GetText()) end
+   if (vb_f:NumLines() >= 13) then vb_appendTooltip(MyTooltipTextLeft13:GetText()) end
+   if (vb_f:NumLines() >= 14) then vb_appendTooltip(MyTooltipTextLeft14:GetText()) end
+   if (vb_f:NumLines() >= 15) then vb_appendTooltip(MyTooltipTextLeft15:GetText()) end
 end
 
 ---------------------------------------------------------
@@ -944,8 +944,8 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
       vb_hasOffHandEnchant, 
       vb_offHandExpiration, 
       vb_offHandCharges = GetWeaponEnchantInfo()
-	  
-	  vb_hasRangedWeaponEnchant = 0;
+      
+      vb_hasRangedWeaponEnchant = 0;
       
       -- Important, rest of code will not run with these values as nil
       if vb_hasMainHandEnchant == nil then
@@ -955,7 +955,7 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
       if vb_hasOffHandEnchant == nil then
          vb_hasOffHandEnchant = 0
       end
-	  -- Important, rest of code will not run with these values as nil
+      -- Important, rest of code will not run with these values as nil
       if vb_hasRangedWeaponEnchant == nil then
          vb_hasRangedWeaponEnchant = 0
       end
@@ -973,7 +973,7 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
             end
          end
       end
-	  
+      
       ---------------------------------------------------------      
       -- Ranged weapon poison
       if (vb_rangedHasPoison()) then
@@ -982,10 +982,10 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
          if (vb_hasPoison() and vb_addon.db.profile.vb_Show_Rogue) then
             vb_outText = vb_outText .. "Poison (Ranged)" .."\n"
          else
-		 -- Nothing
+            -- Nothing
          end
       end
-	  
+      
       ---------------------------------------------------------      
       -- Combat check
       if (UnitAffectingCombat("player")) then
