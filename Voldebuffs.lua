@@ -37,6 +37,7 @@ local defaults = {
       vb_Show_PALADINBLESSING = true,
       vb_Show_PALADINAURA = true,
       vb_Show_PALADINSEAL = true,
+	  vb_Show_PALADINRFURY = true,
       vb_Show_SHAMANSHIELD = true,
       vb_Show_MAGEBUFF = true,
       vb_Show_MAGEARMOR = true,
@@ -46,6 +47,8 @@ local defaults = {
       vb_Show_PRIESTSPIRIT = true,
       vb_Show_PRIESTINNERFIRE = true,
       vb_Show_WARLOCKARMOR = true,
+	  vb_Show_MELEEPOISON = true,
+	  vb_Show_RANGEDPOISON = true,
    }
 }
 
@@ -98,6 +101,7 @@ local vb_WARRIORSHOUT = "Warrior Shout"
 local vb_PALADINBLESSING = "Paladin Blessing"
 local vb_PALADINAURA = "Paladin Aura"
 local vb_PALADINSEAL = "Paladin Seal"
+local vb_PALADINRFURY = "Righteous Fury"
 
 local vb_SHAMANSHIELD = "Shaman Shield"
 
@@ -323,8 +327,16 @@ function vb_OptionsTable()
                      get    = function() return vb_addon.db.profile.vb_Show_PALADINSEAL end,
                      set    = function() vb_addon.db.profile.vb_Show_PALADINSEAL = not vb_addon.db.profile.vb_Show_PALADINSEAL UpdateSpells() end,
                   },
-                  shamanShield = {
+                  paladinSeal = {
                      order    = 27,
+                     type = "toggle",
+                     name = vb_PALADINRFURY,
+                     desc = "Tick to enable |cfff58cba" .. vb_PALADINRFURY .. "|r monitoring",
+                     get    = function() return vb_addon.db.profile.vb_Show_PALADINRFURY end,
+                     set    = function() vb_addon.db.profile.vb_Show_PALADINRFURY = not vb_addon.db.profile.vb_Show_PALADINRFURY UpdateSpells() end,
+                  },
+                  shamanShield = {
+                     order    = 28,
                      type = "toggle",
                      name = vb_SHAMANSHIELD,
                      desc = "Tick to enable |cff0070de" .. vb_SHAMANSHIELD .. "|r monitoring",
@@ -332,7 +344,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_SHAMANSHIELD = not vb_addon.db.profile.vb_Show_SHAMANSHIELD UpdateSpells() end,
                   },
                   mageBuff = {
-                     order    = 28,
+                     order    = 29,
                      type = "toggle",
                      name = vb_MAGEBUFF,
                      desc = "Tick to enable |cff69ccf0" .. vb_MAGEBUFF .. "|r monitoring",
@@ -340,7 +352,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_MAGEBUFF = not vb_addon.db.profile.vb_Show_MAGEBUFF UpdateSpells() end,
                   },
                   mageArmor = {
-                     order    = 29,
+                     order    = 30,
                      type = "toggle",
                      name = vb_MAGEARMOR,
                      desc = "Tick to enable |cff69ccf0" .. vb_MAGEARMOR .. "|r monitoring",
@@ -348,7 +360,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_MAGEARMOR = not vb_addon.db.profile.vb_Show_MAGEARMOR UpdateSpells() end,
                   },
                   druidThorns = {
-                     order    = 30,
+                     order    = 31,
                      type = "toggle",
                      name = vb_DRUIDTHORN,
                      desc = "Tick to enable |cffff7d0a" .. vb_DRUIDTHORN .. "|r monitoring",
@@ -356,7 +368,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_DRUIDTHORN = not vb_addon.db.profile.vb_Show_DRUIDTHORN UpdateSpells() end,
                   },
                   druidBuff = {
-                     order    = 31,
+                     order    = 32,
                      type = "toggle",
                      name = vb_DRUIDBUFF,
                      desc = "Tick to enable |cffff7d0a" .. vb_DRUIDBUFF .. "|r monitoring",
@@ -364,7 +376,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_DRUIDBUFF = not vb_addon.db.profile.vb_Show_DRUIDBUFF UpdateSpells() end,
                   },
                   priestStam = {
-                     order    = 32,
+                     order    = 33,
                      type = "toggle",
                      name = vb_PRIESTSTAM,
                      desc = "Tick to enable |cffffffff" .. vb_PRIESTSTAM .. "|r monitoring",
@@ -372,7 +384,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_PRIESTSTAM = not vb_addon.db.profile.vb_Show_PRIESTSTAM UpdateSpells() end,
                   },
                   priestSpirit = {
-                     order    = 33,
+                     order    = 34,
                      type = "toggle",
                      name = vb_PRIESTSPIRIT,
                      desc = "Tick to enable |cffffffff" .. vb_PRIESTSPIRIT .. "|r monitoring",
@@ -380,7 +392,7 @@ function vb_OptionsTable()
                      set    = function() vb_addon.db.profile.vb_Show_PRIESTSPIRIT = not vb_addon.db.profile.vb_Show_PRIESTSPIRIT UpdateSpells() end,
                   },
                   priestInnerFire = {
-                     order    = 34,
+                     order    = 35,
                      type = "toggle",
                      name = vb_PRIESTINNERFIRE,
                      desc = "Tick to enable |cffffffff" .. vb_PRIESTINNERFIRE .. "|r monitoring",
@@ -563,6 +575,11 @@ local vb_seals = {
    ["Seal of Vengeance"] = true,
 }
 
+local vb_rfury = {
+   ["Righteous Fury"] = true,
+}
+
+
 local vb_magebuffs = {
    ["Arcane Intellect"] = true,
    ["Arcane Brilliance"] = true,   
@@ -687,6 +704,9 @@ function vb_translatebuffs(vb_inpbuffs)
    -- Seals
    vb_translater(vb_seals,vb_inpbuffs,vb_PALADINSEAL)
    
+   -- Righteous Fury
+   vb_translater(vb_rfury,vb_inpbuffs,vb_PALADINRFURY)
+   
    -- Druid Thorns
    vb_translater(vb_druidthorns,vb_inpbuffs,vb_DRUIDTHORN)
    
@@ -743,31 +763,20 @@ function vb_canWarlockWeaponBuff()
    end
    return false
 end
----------------------------------------------------------
--- Checks if player has poison in bags
-function vb_hasPoison(vb_poisonlist)
-   --   for vb_bag in pairs(vb_bags) do
-   --      vb_numberofitems = GetContainerNumSlots(vb_bag)
-   --      
-   --      for i=1,vb_numberofitems do 
-   --         local vb_link = GetContainerItemLink(vb_bag,i)
-   --         local vb_printable = ""
-   --         if (vb_link) then vb_printable = gsub(vb_link, "\124", "\124\124") end
-   --         
-   --         for vb_poison in pairs(vb_poisonlist) do
-   --            if string.match(vb_printable,vb_poison) then
-   --               return true
-   --            end
-   --         end
-   --      end
-   --   end
-   return false
-end
 
 ---------------------------------------------------------
 -- Checks if player has poison in skillbook
 function vb_hasPoison()
    if IsUsableSpell("Poisons") then
+      return true
+   end
+   return false
+end
+
+---------------------------------------------------------
+-- Checks if player has Auto Shot in skillbook
+function vb_hasAutoShot()
+   if IsUsableSpell("Auto Shot") then
       return true
    end
    return false
@@ -785,6 +794,52 @@ function vb_rangedHasPoison()
    else
       return false
    end
+end
+
+---------------------------------------------------------
+-- Checks if player has a mainhand weapon equipped
+function vb_mainhandEquipped()
+   
+   temp_itemId = vb_getItemId("MainHandSlot");
+   if (temp_itemId == nil) then
+      -- No itemId found
+      return false 
+   end;
+   
+   vb1,vb2,vb3,vb4,vb5,vb6 = GetItemInfo(temp_itemId);
+   if (string.find(vb6,"Weapon")) then
+      -- Equipped weapon found
+      return true
+   end
+   return false
+   
+end
+
+---------------------------------------------------------
+-- Checks if player has a offhand weapon equipped, false if shield or offhand is found
+function vb_offhandEquipped()
+   
+   temp_itemId = vb_getItemId("SecondaryHandSlot");
+   if (temp_itemId == nil) then
+      -- No itemId found
+      return false 
+   end;
+   
+   vb1,vb2,vb3,vb4,vb5,vb6 = GetItemInfo(temp_itemId);
+   if (string.find(vb6,"Weapon")) then
+      -- Equipped weapon found
+      return true
+   end
+   return false
+   
+end
+
+function vb_getItemId(vb_slot)
+
+	slotId, textureName = GetInventorySlotInfo(vb_slot); 
+	itemId = GetInventoryItemID("player", slotId);
+	
+	return itemId;
 end
 
 function vb_appendTooltip(vb_tempTooltipInput)
@@ -916,6 +971,7 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
          if (vb_addon.db.profile.vb_Show_PALADINAURA) then vb_checkbuff(vb_auras, vb_PALADINAURA) end
          if (vb_addon.db.profile.vb_Show_PALADINBLESSING) then vb_checkbuff(vb_blessings, vb_PALADINBLESSING) end
          if (vb_addon.db.profile.vb_Show_PALADINSEAL) then vb_checkbuff(vb_seals, vb_PALADINSEAL) end
+		 if (vb_addon.db.profile.vb_Show_PALADINRFURY) then vb_checkbuff(vb_rfury, vb_PALADINRFURY) end
       end
       --------------------------------------------------------- 
       -- Priest Buffs
@@ -962,15 +1018,39 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
       
       ---------------------------------------------------------      
       -- Melee weapon enhancements
-      if (vb_hasMainHandEnchant == 1 and vb_hasOffHandEnchant == 1) then
+      --if (vb_hasMainHandEnchant == 1 and vb_hasOffHandEnchant == 1) then
+         -- Nothing
+      --else
+      --   if (vb_canShamanWeaponBuff() and vb_addon.db.profile.vb_Show_Shaman) then
+      --      vb_outText = vb_outText .. "Weapon buff" .."\n"
+      --   else
+      --      if (vb_canWarlockWeaponBuff() and vb_addon.db.profile.vb_Show_Warlock) then
+      --         vb_outText = vb_outText .. "Warlock Fire/Spellstone" .."\n"
+      --      end
+      --   end
+      --end
+	  
+      ---------------------------------------------------------         
+      -- Mainhand shaman enhancements
+      if (vb_hasMainHandEnchant  == 1) then
          -- Nothing
       else
-         if (vb_canShamanWeaponBuff() and vb_addon.db.profile.vb_Show_Shaman) then
-            vb_outText = vb_outText .. "Weapon buff" .."\n"
+         if (vb_canShamanWeaponBuff() and vb_addon.db.profile.vb_Show_Shaman and vb_mainhandEquipped()) then
+            vb_outText = vb_outText .. "Weapon buff (Mainhand)" .."\n"
          else
-            if (vb_canWarlockWeaponBuff() and vb_addon.db.profile.vb_Show_Warlock) then
-               vb_outText = vb_outText .. "Warlock Fire/Spellstone" .."\n"
-            end
+            -- Nothing
+         end
+      end
+	  
+      ---------------------------------------------------------         
+      -- Offhand shaman enhancements
+      if (vb_hasOffHandEnchant  == 1) then
+         -- Nothing
+      else
+         if (vb_canShamanWeaponBuff() and vb_addon.db.profile.vb_Show_Shaman and vb_offhandEquipped()) then
+            vb_outText = vb_outText .. "Weapon buff (Offhand)" .."\n"
+         else
+            -- Nothing
          end
       end
       
@@ -979,8 +1059,32 @@ vb_frame:SetScript("OnEvent", function(self, event, ...)
       if (vb_rangedHasPoison()) then
          -- Nothing
       else
-         if (vb_hasPoison() and vb_addon.db.profile.vb_Show_Rogue) then
+         if (vb_hasPoison() and vb_addon.db.profile.vb_Show_Rogue and vb_hasAutoShot()) then
             vb_outText = vb_outText .. "Poison (Ranged)" .."\n"
+         else
+            -- Nothing
+         end
+      end
+	  
+      ---------------------------------------------------------      
+      -- Mainhand weapon poison
+      if (vb_hasMainHandEnchant  == 1) then
+         -- Nothing
+      else
+         if (vb_hasPoison() and vb_addon.db.profile.vb_Show_Rogue and vb_mainhandEquipped()) then
+            vb_outText = vb_outText .. "Poison (Mainhand)" .."\n"
+         else
+            -- Nothing
+         end
+      end
+	  
+      ---------------------------------------------------------      
+      -- Offhand weapon poison
+      if (vb_hasOffHandEnchant  == 1) then
+         -- Nothing
+      else
+         if (vb_hasPoison() and vb_addon.db.profile.vb_Show_Rogue and vb_offhandEquipped()) then
+            vb_outText = vb_outText .. "Poison (Offhand)" .."\n"
          else
             -- Nothing
          end
